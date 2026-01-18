@@ -1,0 +1,18 @@
+services:
+    nginx:
+        image: nginx
+        volumes:
+            -   ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+            -   ./:/var/www/project
+        ports:
+            -   "8080:80"
+        depends_on:
+            -   php
+
+    php:
+        build:
+            context: ./
+            dockerfile: ./docker/php/Dockerfile
+        volumes:
+            -   ./docker/php/www.conf:/usr/local/etc/php-fpm.d/www.conf:ro
+            -   ./:/var/www/project
